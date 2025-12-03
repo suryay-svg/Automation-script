@@ -6,35 +6,36 @@ const path = require('path');
 test('check the dropdown', async ({ page }) => {
   await page.goto('https://pattemdigital.com/')
   await page.locator('#button--cta-footer-banner').click();
-  await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
-  await page.getByRole('textbox', { name: 'Enter Your Name' }).fill('surya');
-  await page.getByRole('textbox', { name: 'Enter Your Email Address' }).click();
-  await page.getByRole('textbox', { name: 'Enter Your Email Address' }).fill('SuRya@playwright.com');
-  await page.getByRole('textbox', { name: 'Enter Phone Number' }).click();
-  await page.getByRole('textbox', { name: 'Enter Phone Number' }).fill('9876543210');
+  await page.locator('#modal__content').getByPlaceholder('Enter Your Name').click ();
+  await page .locator('#modal__content').getByPlaceholder('Enter Your Name').fill('surya');
+  await page.getByPlaceholder('Enter Your Email Address').click();
+  await page.getByPlaceholder('Enter Your Email Address').fill('tanya@playwright.com');
+  await page.getByPlaceholder('Enter Phone Number').click();
+  await page.getByPlaceholder('Enter Phone Number').fill('9876543210');
+  
 
   await page.getByRole('button', { name: 'Select the options' }).click();
-    await page.click('text=Job Seeker');
-    const resumePath = path.resolve("C:\\Users\\surya\\Downloads\\Reshma S Babu CV.pdf")
-    await page.setInputFiles('input[type="file"]', resumePath);
-    const submitBtn = page.locator('#modal__content--contact-us #button--submit-contact-us');
-    await expect(submitBtn).toBeVisible({ timeout: 5000 });
-    await submitBtn.click();
-    await page.waitForTimeout(5000); 
-    await expect(page.locator('#form-success__message--contact-us')).toBeVisible({ timeout: 5000 });
-    const successMessage = page.locator('#form-success__message--contact-us');
-    await expect(successMessage).toBeVisible();
+  await page.click('text=Job Seeker');
+  const resumePath = path.resolve("C:\\Users\\surya\\Downloads\\Reshma S Babu CV.pdf")
+  await page.setInputFiles('input[type="file"]', resumePath);
+  const submitBtn = page.locator('#modal__content--contact-us #button--submit-contact-us');
+  await expect(submitBtn).toBeVisible({ timeout: 5000 });
+  await submitBtn.click();
+  await page.waitForTimeout(5000); 
+  await expect(page.locator('#form-success__message--contact-us')).toBeVisible({ timeout: 5000 });
+  const successMessage = page.locator('#form-success__message--contact-us');
+  await expect(successMessage).toBeVisible();
     });
 
   test('check the dropdown for client', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
     await page.locator('#button--cta-footer-banner').click();
-    await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
-    await page.getByRole('textbox', { name: 'Enter Your Name' }).fill('surya');
-    await page.getByRole('textbox', { name: 'Enter Your Email Address' }).click();
-    await page.getByRole('textbox', { name: 'Enter Your Email Address' }).fill( 'surya@playwright.com');
-    await page.getByRole('textbox', { name: 'Enter Phone Number' }).click();
-    await page.getByRole('textbox', { name: 'Enter Phone Number' }).fill('9876543210')
+    await page.getByPlaceholder('Enter Your Name').click();
+    await page.getByPlaceholder('Enter Your Name').fill('surya');
+    await page.getByPlaceholder('Enter Your Email Address').click();
+    await page.getByPlaceholder('Enter Your Email Address').fill('tanya@playwright.com');
+    await page.getByPlaceholder('Enter Phone Number').click();
+    await page.getByPlaceholder('Enter Phone Number').fill('9876543210');
   
     await page.getByRole('button', { name: 'Select the options' }).click();
     await page.locator('div').filter({ hasText: /^Client$/ }).click();
@@ -56,12 +57,12 @@ test('check the dropdown', async ({ page }) => {
   test('check the dropdown for vendor', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
     await page.locator('#button--cta-footer-banner').click();
-    await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
-    await page.getByRole('textbox', { name: 'Enter Your Name' }).fill('ramu');
-    await page.getByRole('textbox', { name: 'Enter Your Email Address' }).click();
-    await page.getByRole('textbox', { name: 'Enter Your Email Address' }).fill('surya@playwright.com');
-    await page.getByRole('textbox', { name: 'Enter Phone Number' }).click();
-    await page.getByRole('textbox', { name: 'Enter Phone Number' }).fill('9876543210');
+    await page.locator('#modal__content').getByPlaceholder('Enter Your Name').click();
+    await page.locator('#modal__content').getByPlaceholder('Enter Your Name').fill('surya');
+    await page.getByPlaceholder('Enter Your Email Address').click();
+    await page.getByPlaceholder('Enter Your Email Address').fill('tanya@playwright.com');
+    await page.getByPlaceholder('Enter Phone Number').click();
+    await page.getByPlaceholder('Enter Phone Number').fill('9876543210');
   
     await page.getByRole('button', { name: 'Select the options' }).click();
     await page.locator('div').filter({ hasText: /^Vendor$/ }).click();

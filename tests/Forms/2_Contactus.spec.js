@@ -5,7 +5,7 @@ import path from 'path';
 
 test('Fill PattemDigital Contact Form Job Seeker', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
-    await page.getByRole('button', { name: 'Start With Us' }).click();
+    await page.getByRole('button', { name: 'Start With Us' }).click({ force: true });
     await expect(page.locator('#modal__heading--contact-us')).toBeVisible();
     await page.locator('#modal__heading--contact-us').click();
     await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
@@ -26,7 +26,7 @@ test('Fill PattemDigital Contact Form Job Seeker', async ({ page }) => {
  
 test('Fill PattemDigital Contact Form Client', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
-    await page.getByRole('button', { name: 'Start With Us' }).click();  
+    await page.getByRole('button', { name: 'Start With Us' }).click({ force: true });  
     await expect(page.locator('#modal__heading--contact-us')).toBeVisible();
     await page.locator('#modal__heading--contact-us').click();
     await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
@@ -50,7 +50,7 @@ test('Fill PattemDigital Contact Form Client', async ({ page }) => {
  
 test('Fill PattemDigital Contact Form vendor', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
-    await page.getByRole('button', { name: 'Start With Us' }).click();  
+    await page.getByRole('button', { name: 'Start With Us' }).click({ force: true });
     await expect(page.locator('#modal__heading--contact-us')).toBeVisible();  
     await page.locator('#modal__heading--contact-us').click();
     await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
@@ -73,5 +73,5 @@ test('Fill PattemDigital Contact Form vendor', async ({ page }) => {
     await page.locator('#vendorDocument').setInputFiles(resumePath);
     await page.locator('#modal__content--contact-us #button--submit-contact-us').click()
     await page.waitForTimeout(5000); 
-    await expect(page.locator('#form-success__message--contact-us')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('#form-success__message--contact-us')).toBeVisible({ timeout: 5000 });
   });
