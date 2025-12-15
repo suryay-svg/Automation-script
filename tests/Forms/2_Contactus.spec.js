@@ -5,7 +5,8 @@ import path from 'path';
 
 test('Fill PattemDigital Contact Form Job Seeker', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
-    await page.getByRole('button', { name: 'Start With Us' }).click({ force: true });
+    await page.waitForLoadState('networkidle');
+    await page.locator(`//span[normalize-space()='Start With Us']`).click()
     await expect(page.locator('#modal__heading--contact-us')).toBeVisible();
     await page.locator('#modal__heading--contact-us').click();
     await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
@@ -19,6 +20,7 @@ test('Fill PattemDigital Contact Form Job Seeker', async ({ page }) => {
     await page.click('text=Job Seeker');
     const resumePath = path.resolve("C:\\Users\\surya\\Downloads\\Reshma S Babu CV.pdf");   
     await page.setInputFiles('input[type="file"]', resumePath); 
+    await page.waitForLoadState('networkidle');
     await page.locator('#modal__content--contact-us #button--submit-contact-us').click()
     await page.waitForTimeout(5000);
     await expect(page.locator('#form-success__message--contact-us')).toBeVisible({ timeout: 10000 });
@@ -26,6 +28,7 @@ test('Fill PattemDigital Contact Form Job Seeker', async ({ page }) => {
  
 test('Fill PattemDigital Contact Form Client', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
+    await page.waitForLoadState('networkidle');
     await page.getByRole('button', { name: 'Start With Us' }).click({ force: true });  
     await expect(page.locator('#modal__heading--contact-us')).toBeVisible();
     await page.locator('#modal__heading--contact-us').click();
@@ -49,29 +52,44 @@ test('Fill PattemDigital Contact Form Client', async ({ page }) => {
   });
  
 test('Fill PattemDigital Contact Form vendor', async ({ page }) => {
-    await page.goto('https://pattemdigital.com/');
-    await page.getByRole('button', { name: 'Start With Us' }).click({ force: true });
-    await expect(page.locator('#modal__heading--contact-us')).toBeVisible();  
-    await page.locator('#modal__heading--contact-us').click();
-    await page.getByRole('textbox', { name: 'Enter Your Name' }).click(); 
-    await page.getByRole('textbox', { name: 'Enter Your Name' }).fill('surya');
-    await page.getByRole('textbox', { name: 'Enter Your Email Address' }).click();
-    await page.getByRole('textbox', { name: 'Enter Your Email Address' }).fill('vendor@playwright.com');
-    await page.getByRole('textbox', { name: 'Enter Phone Number' }).click();
-    await page.getByRole('textbox', { name: 'Enter Phone Number' }).fill('9876543210'); 
 
-    await page.getByRole('button', { name: 'Select the options' }).click();
-    await page.locator('div').filter({ hasText: /^Vendor$/ }).click();
-    await page.locator('#vendorServiceOverview');   
-    await page.getByPlaceholder('Enter Your Organization Name').clear();
-    await page.getByPlaceholder('Enter Your Organization Name').fill('Tech Innovations Ltd.');
-    await page.getByLabel('Choose your sector').click();
-    await page.locator('[data-value="staffing"]').click();
-    await page.locator('#vendorProjectOverview').fill('This software streamlines and automates manpower staffing processes...');
-     await page.locator('.lucide.lucide-chevron-down.text-grey-dark.transition-transform');
-    const resumePath = path.resolve("C:\\Users\\surya\\Downloads\\Reshma S Babu CV.pdf");
-    await page.locator('#vendorDocument').setInputFiles(resumePath);
-    await page.locator('#modal__content--contact-us #button--submit-contact-us').click()
-    await page.waitForTimeout(5000); 
-    await expect(page.locator('#form-success__message--contact-us')).toBeVisible({ timeout: 5000 });
+  await page.goto('https://pattemdigital.com/', {
+    waitUntil: 'domcontentloaded',
+    timeout: 60000
   });
+
+  await page.getByRole('button', { name: 'Start With Us' }).click();
+
+  await expect(
+    page.locator('#modal__heading--contact-us')
+  ).toBeVisible();
+
+  await page.getByRole('textbox', { name: 'Enter Your Name' }).fill('surya');
+  await page.getByRole('textbox', { name: 'Enter Your Email Address' })
+    .fill('vendor@playwright.com');
+  await page.getByRole('textbox', { name: 'Enter Phone Number' })
+    .fill('9876543210');
+
+  await page.getByRole('button', { name: 'Select the options' }).click();
+  await page.getByText('Vendor', { exact: true }).click();
+
+  await page.getByPlaceholder('Enter Your Organization Name')
+    .fill('Tech Innovations Ltd.');
+
+  await page.getByLabel('Choose your sector').click();
+  await page.locator('[data-value="staffing"]').click();
+
+  await page.locator('#vendorProjectOverview')
+    .fill('This software streamlines and automates manpower staffing processes.');
+
+  const resumePath = path.resolve(
+    'C:/Users/surya/Downloads/Reshma S Babu CV.pdf'
+  );
+  await page.locator('#vendorDocument').setInputFiles(resumePath);
+
+  await page.locator('#button--submit-contact-us').nth(1).click();
+
+  await expect(
+    page.locator('#form-success__message--contact-us')
+  ).toBeVisible({ timeout: 10000 });
+});
