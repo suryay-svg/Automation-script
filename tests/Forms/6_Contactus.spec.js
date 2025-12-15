@@ -25,7 +25,7 @@ test('check the dropdown', async ({ page }) => {
   await expect(page.locator('#form-success__message--contact-us')).toBeVisible({ timeout: 5000 });
   const successMessage = page.locator('#form-success__message--contact-us');
   await expect(successMessage).toBeVisible();
-    });
+  });
 
   test('check the dropdown for client', async ({ page }) => {
     await page.goto('https://pattemdigital.com/');
